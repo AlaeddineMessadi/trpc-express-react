@@ -5,11 +5,21 @@ import cors from "cors";
 import { z } from "zod";
 
 
-const appRouter = trpc.router().query('hello', {
+const appRouter = trpc.router().query('status', {
   resolve() {
-    return 'hello';
+    return 'connected';
   }
-});
+}).mutation('createUser', {
+    // validate input with Zod
+    input: z.object({ name: z.string().min(5) }),
+    async resolve(req) {
+      // use your ORM of choice
+      // return await UserModel.create({
+      //   data: req.input,
+      // });
+    },
+  });
+
 
 
 const app = express();

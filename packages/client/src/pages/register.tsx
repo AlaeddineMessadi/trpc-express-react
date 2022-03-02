@@ -1,13 +1,10 @@
 import React, { useState, useRef } from 'react'
 
 export default function Register() {
-  const [name, setName] = useState('')
   const inputRef = useRef(null)
 
   const handleCreateAccount = () => {
     const value = inputRef.current.value
-    console.log(inputRef.current)
-    console.log('name', value)
   }
   return (
     <div className="flex flex-col items-end md:flex-row">

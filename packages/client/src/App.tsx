@@ -34,18 +34,27 @@ const App = () => {
 }
 
 const AppContent = () => {
-  const { data, error, isLoading } = trpc.useQuery(['hello'])
-  console.log({ isLoading })
+  const { data, error, isLoading } = trpc.useQuery(['status'])
+
+  console.log(data, error, isLoading)
   return (
     <>
       <NavBar />
       <div className="container mx-auto px-4 centermax-w-6xl py-12">
-        <h1 className="text-7xl dark:text-white">Messenger</h1>
+        <h1 className="text-7xl dark:text-white flex">
+          Messenger
+          {data && (
+            <span
+              className={`badge badge-${
+                (data && 'success') || (error && 'danger') || (isLoading && 'warning')
+              }`}
+            >
+              {(data && 'Connected') || (error && 'Error') || (isLoading && 'Loading')}
+            </span>
+          )}
+        </h1>
         <article className="prose">
-          <p>
-            Messenger application like WhatsApp using React and jPRC.
-            {data && <span className="badge badge-success">Connected</span>}
-          </p>
+          <p>Messenger application like WhatsApp using React and jPRC.</p>
         </article>
         <div className="divider" />
         <Register />
