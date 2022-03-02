@@ -1,23 +1,57 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
+import NavBar from './components/nav-bar'
 
-import "./index.scss";
+import './index.scss'
+import Register from './pages/register'
 
-const App = () => (
-<><article className="prose">
-  <h1>Garlic bread with cheese: What the science tells us</h1>
-  <p>For years parents have espoused the health benefits of eating garlic bread with cheese to their children, with the food earning such an iconic status in our culture that kids will often dress up as warm, cheesy loaf for Halloween.</p>
-  <p>But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases springing up around the country.</p>
-  </article>
-  <div className="dropdown">
-  <label tabIndex={0} className="m-1 btn">Click</label>
-  <ul tabIndex={0} className="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
-    <li><a>Item 1</a></li>
-    <li><a>Item 2</a></li>
-      </ul>
-      <p className="text-7xl dark:text-white">FlowBite</p>
-</div>
-  </>
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { trpc } from './utils/trpc'
 
-);
-ReactDOM.render(<App />, document.getElementById("app"));
+const Client = new QueryClient()
+const App = () => {
+  const [queryClient] = useState(() => new QueryClient())
+  const [trpcClient] = useState(() =>
+    trpc.createClient({
+      url: 'http://localhost:8080/trpc',
+
+      // optional
+      headers() {
+        return {
+          authorization: 'cookie-auth-token', //getAuthCookie()
+        }
+      },
+    }),
+  )
+
+  return (
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <AppContent />
+      </QueryClientProvider>
+    </trpc.Provider>
+  )
+}
+
+const AppContent = () => {
+  const { data, error, isLoading } = trpc.useQuery(['hello'])
+  console.log({ isLoading })
+  return (
+    <>
+      <NavBar />
+      <div className="container mx-auto px-4 centermax-w-6xl py-12">
+        <h1 className="text-7xl dark:text-white">Messenger</h1>
+        <article className="prose">
+          <p>
+            Messenger application like WhatsApp using React and jPRC.
+            {data && <span className="badge badge-success">Connected</span>}
+          </p>
+        </article>
+        <div className="divider" />
+        <Register />
+      </div>
+    </>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('app'))
