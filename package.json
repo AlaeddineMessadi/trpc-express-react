@@ -1,0 +1,19 @@
+{
+  "name": "jprc_express_react",
+  "version": "1.0.0",
+  "description": "jprc express reactjs",
+  "main": "index.js",
+  "author": "alaeddine.messadi",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \" wsrun --parallel start\""
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "wsrun": "^5.2.4"
+  }
+}
