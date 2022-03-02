@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "concurrently \" wsrun --parallel start\""
+    "start": "concurrently \" wsrun --parallel start\"",
+    "dev": "concurrently \" wsrun --parallel dev\""
   },
   "workspaces": [
     "packages/*"
