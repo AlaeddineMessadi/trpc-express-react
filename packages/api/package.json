@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node index.ts",
-    "dev": "ts-node-dev index.ts"
+    "dev": "ts-node-dev index.ts",
+    "db:up": "docker run --name mongodb-jrpc --network jrpc_network -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -v ./mongodb/database  -d mongo:5.0.6",
+    "db:down": "docker stop mongodb-jrpc",
+    "db:rm": "docker rm mongodb-jrpc"
   },
   "dependencies": {
     "@trpc/server": "^9.20.1",
@@ -17,6 +20,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "prisma": "^3.10.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   }
