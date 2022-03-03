@@ -1,13 +1,16 @@
 import React, { useState, useRef } from 'react'
+import { trpc } from '../utils/trpc'
 
 export default function Register() {
   const inputRef = useRef(null)
-
-  const handleCreateAccount = () => {
-    const value = inputRef.current.value
+  const createUserMutation = trpc.useMutation(['createUser'])
+  const handleCreateAccount = async () => {
+    const name = inputRef.current.value
+    const result = await createUserMutation.mutate({ name })
+    console.log({ result })
   }
   return (
-    <div className="flex flex-col items-end md:flex-row">
+    <div className="flex flex-col items-end md:flex-row" style={{ justifyContent: 'center' }}>
       <div className="form-control w-full max-w-xs">
         <label className="label">
           <span className="label-text">Your Name</span>
@@ -19,7 +22,10 @@ export default function Register() {
           ref={inputRef}
         />
       </div>
-      <div className="divider divider-horizontal" />
+      <div
+        className="divider divider-horizontal max-h-10 xs:hidden md:display"
+        style={{ marginTop: 40 }}
+      />
       <button className="btn btn-primary" onClick={handleCreateAccount}>
         Enter
       </button>

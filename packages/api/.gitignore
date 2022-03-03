@@ -26,6 +26,5 @@ coverage
 # Benchmarking
 benchmarks/graphs
 
-mongodb/**
 
 .env

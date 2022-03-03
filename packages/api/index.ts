@@ -11,24 +11,22 @@ const prisma = new PrismaClient()
 
 const appRouter = trpc.router().query('status', {
   resolve() {
-    return 'connected';
+    const hello = "connected1!"
+    return hello;
   }
 }).mutation('createUser', {
     // validate input with Zod
     input: z.object({ name: z.string().min(5) }),
-    async resolve(req) {
+    async resolve({input}) {
       // use your ORM of choice
-      await prisma.$connect()
-
-      await prisma.user.create({
+      // const conntect = await prisma.$connect()
+      const result = await prisma.user.create({
         data: {
-          name: 'Rich',
+          name: input.name,
         },
       })
-      
-      // return await UserModel.create({
-      //   data: req.input,
-      // });
+      console.log('createYser')
+      return result;
     },
   });
 
