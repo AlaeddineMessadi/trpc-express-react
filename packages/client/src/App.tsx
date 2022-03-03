@@ -36,7 +36,6 @@ const App = () => {
 const AppContent = () => {
   const { data, error, isLoading } = trpc.useQuery(['status'])
 
-  console.log(data, error, isLoading)
   return (
     <>
       <NavBar />
