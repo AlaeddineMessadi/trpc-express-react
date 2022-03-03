@@ -6,11 +6,14 @@
   "scripts": {
     "start": "ts-node index.ts",
     "dev": "ts-node-dev index.ts",
+    "prisma:generate": "npx prisma generate",
+    "prisma:pull": "npx prisma db pull",
     "db:up": "docker run --name mongodb-jrpc --network jrpc_network -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -v ./mongodb/database  -d mongo:5.0.6",
     "db:down": "docker stop mongodb-jrpc",
     "db:rm": "docker rm mongodb-jrpc"
   },
   "dependencies": {
+    "@prisma/client": "^3.10.0",
     "@trpc/server": "^9.20.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",

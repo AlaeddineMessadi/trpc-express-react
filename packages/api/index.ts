@@ -5,6 +5,10 @@ import cors from "cors";
 import { z } from "zod";
 
 
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
+
 const appRouter = trpc.router().query('status', {
   resolve() {
     return 'connected';
@@ -14,6 +18,14 @@ const appRouter = trpc.router().query('status', {
     input: z.object({ name: z.string().min(5) }),
     async resolve(req) {
       // use your ORM of choice
+      await prisma.$connect()
+
+      await prisma.user.create({
+        data: {
+          name: 'Rich',
+        },
+      })
+      
       // return await UserModel.create({
       //   data: req.input,
       // });
@@ -42,7 +54,22 @@ app.listen(port, () => {
 });
 
 
-
+/**
+ * await prisma.user.create({
+        data: {
+          name: 'Rich',
+          email: 'hello@prisma.com',
+          messages: {
+            create: {
+              text: 'My first post',
+              received: false,
+              seen: false,
+              createdAt: new Date(),
+            },
+          },
+        },
+      })
+ */
 
 
 /** exports */
