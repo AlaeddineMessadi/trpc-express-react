@@ -1,2 +1,2 @@
-# jprc_express_react
-jPRC express react application
+# tprc_express_react
+tPRC express react application
