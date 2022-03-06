@@ -1,2 +1,2 @@
-# tprc_express_react
-tPRC express react application
+# tRPC Todo Express + React
+This a tPRC Todo list application build with express react application
